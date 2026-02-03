@@ -34,7 +34,7 @@ pipeline {
             echo "React Manual Pipeline Successful"
         }
 	  failure{
-		echo “ React Manual Pipeline Successful”
+		echo "React Manual Pipeline Successful"
 	  }
         always {
             cleanWs()
