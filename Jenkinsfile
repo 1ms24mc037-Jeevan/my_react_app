@@ -21,11 +21,12 @@ pipeline {
         }
 
         stage('Push Docker Image') {
-            steps {
-                sh 'docker login -u $DOCKERHUB_USR -p $DOCKERHUB_PSW'
-                sh 'docker push $IMAGE_NAME:latest'
-            }
-        }
+    steps {
+        sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
+        sh 'docker push $IMAGE_NAME:latest'
+    }
+}
+
     }
 
     post {
