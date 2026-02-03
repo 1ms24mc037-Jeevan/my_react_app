@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = "jeevanshettya/my_react_app"
-        DOCKERHUB = credentials('dockerhub')
     }
 
     stages {
@@ -21,12 +20,13 @@ pipeline {
         }
 
         stage('Push Docker Image') {
-    steps {
-        sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
-        sh 'docker push $IMAGE_NAME:latest'
-    }
-}
-
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USR', passwordVariable: 'DOCKERHUB_PSW')]) {
+                    sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
+                    sh 'docker push $IMAGE_NAME:latest'
+                }
+            }
+        }
     }
 
     post {
